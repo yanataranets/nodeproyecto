@@ -1,0 +1,30 @@
+@layout('layout.app')
+
+@section('content')
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.4/basic.css" integrity="sha512-+Vla3mZvC+lQdBu1SKhXLCbzoNCl0hQ8GtCK8+4gOJS/PN9TTn0AO6SxlpX8p+5Zoumf1vXFyMlhpQtVD5+eSw==" crossorigin="anonymous" />" />
+    <div>
+
+
+
+      </div>
+  <p>
+    Welcome <strong>{{ auth.user.username }}</strong>!
+  </p>
+
+
+    <h1>Upload file</h1>
+<form method="POST" action="FilesController.store" files="true" enctype="multipart/form-data">
+{{ csrfField() }}
+  <input type="file" name="file" />
+  <button type="submit"> Submit </button>
+</form>
+
+
+
+  {{ script('app') }}
+  {{ script('https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.4/min/dropzone.min.js')}}
+
+@endsection
