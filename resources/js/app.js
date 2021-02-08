@@ -13,7 +13,5 @@ const multer = require("multer");
 //     res.send("Error");
 //   else
 //     res.send("Done");
-//
-//   next.req.file = Date.now();
 // });
 // app.listen(3000);

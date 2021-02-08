@@ -60,9 +60,3 @@ const commands = []
 
 module.exports = { providers, aceProviders, aliases, commands }
 
-const express = require("express");
-const multer  = require("multer");
-const path = require('path');
-
-const app = express();
-

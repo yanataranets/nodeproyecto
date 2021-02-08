@@ -34,24 +34,24 @@ Route.post('password/email', 'Auth/PasswordResetController.sendResetLinkEmail')
 Route.get('password/reset/:token', 'Auth/PasswordResetController.showResetForm')
 Route.post('password/reset', 'Auth/PasswordResetController.reset')
 
-Route.post('/file', 'FilesController.store')
-//
-// const Helpers = use('Helpers')
 
-// Route.post('upload', async ({ request }) => {
-//   const profileFile = request.file('profile_pic', {
-//     types: ['pdf'],
-//     size: '20mb'
-//   })
 //
-//   await profileFile.move(Helpers.tmpPath('uploads'), {
-//     name: '',
-//     overwrite: true
-//   })
-//
-//   if (!profileFile.moved()) {
-//     return profileFile.error()
-//   }
-//
-//   return 'File moved'
-// })
+const Helpers = use('Helpers')
+
+Route.post('upload', async ({ request }) => {
+  const profileFiles = request.file('profile_files', {
+    types: ['pdf'],
+    size: '20mb'
+  })
+
+  await profileFiles.moveAll(Helpers.tmpPath('uploads'), (file) => {
+    return {
+      name: ''
+    }
+  })
+
+  if (!profileFiles.movedAll()) {
+    return profileFiles.errors()
+  }
+  return ('/')
+})
