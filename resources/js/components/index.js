@@ -4,18 +4,7 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 
 
-$(document).ready(function (){
-  $('#btn-addline').click(function(e) {
-    $('#cantidadadd').append('      <tr>\n' +
-      '        <td>\n' +
-      '              <input class="" name="cantidad" id="cantidad" type="text" placeholder="Cantidad" />\n' +
-      '        </td>\n' +
-      '        <td>\n' +
-      '          <textarea class="form-control" name="textarea"></textarea>\n' +
-      '        </td>\n' +
-      '      </tr>\n');
-  });
-});
+
 /*
 ===============================================================
 
@@ -31,17 +20,6 @@ but I would appreciate an attribution from my work. I hope you enjoy it.
 ===============================================================
 */
 
-$(document).ready(function () {
-  $("input").focus(function () {
-    $(this).parent().find(".label-txt").addClass("label-active");
-  });
-
-  $("input").focusout(function () {
-    if ($(this).val() == "") {
-      $(this).parent().find(".label-txt").removeClass("label-active");
-    }
-  });
-});
 
 
 ReactDOM.render(

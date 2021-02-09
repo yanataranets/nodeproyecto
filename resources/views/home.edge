@@ -18,12 +18,11 @@
     <h1>Upload file</h1>
 <form method="POST" action="/upload" enctype="multipart/form-data">
 {{ csrfField() }}
-  <input type="file" name="profile_files[]" multiple/>
+  <input type="file" name="profile_file"/>
   <button type="submit"> Submit </button>
 </form>
 
+<script src="../js/app.js"></script>
 
-
-  {{ script('app') }}
 
 @endsection

@@ -38,19 +38,18 @@ Route.post('password/reset', 'Auth/PasswordResetController.reset')
 //
 const Helpers = use('Helpers')
 
-Route.post('upload', async ({ request }) => {
-  const profileFiles = request.file('profile_files', {
+Route.post('/upload', async ({ request }) => {
+  const profileFiles = request.file('profile_file', {
     types: ['pdf'],
     size: '20mb'
   })
 
-  await profileFiles.moveAll(Helpers.tmpPath('uploads'), (file) => {
-    return {
-      name: ''
-    }
+  await profileFiles.move(Helpers.tmpPath('uploads'), {
+    name: Date.now()+'.pdf',
+    overwrite: true
   })
 
-  if (!profileFiles.movedAll()) {
+  if (!profileFiles.moved()) {
     return profileFiles.errors()
   }
   return ('/')
