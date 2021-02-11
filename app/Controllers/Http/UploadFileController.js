@@ -1,9 +1,8 @@
 'use strict'
-var express = require('express')
-var multer  = require('multer')
-var upload = multer({ dest: 'uploads/' })
+const Client = require('ssh2-sftp-client');
 
-var app = express()
+
+
 class UploadFileController {
 
 }

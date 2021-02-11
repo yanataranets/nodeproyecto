@@ -18,6 +18,8 @@ const Route = use('Route')
 
 Route.on('/').render('home').as('home').middleware(['auth'])
 
+Route.get('/post', 'PostController.index').as('post');
+Route.post('/post', 'PostController.create').as('post.create');
 
 Route.get('register', 'Auth/RegisterController.showRegisterForm').middleware([
   'authenticated'
@@ -41,16 +43,18 @@ const Helpers = use('Helpers')
 Route.post('/upload', async ({ request }) => {
   const profileFiles = request.file('profile_file', {
     types: ['pdf'],
-    size: '20mb'
+    size: '20mb',
+    extname: ['jpeg', 'png', 'jpg']
   })
 
   await profileFiles.move(Helpers.tmpPath('uploads'), {
     name: Date.now()+'.pdf',
-    overwrite: true
+    overwrite: false
   })
 
   if (!profileFiles.moved()) {
-    return profileFiles.errors()
+    return profileFiles.error()
   }
-  return ('/')
+  return ('done')
 })
+
