@@ -7,14 +7,13 @@ class UploadsSchema extends Schema {
   up () {
     this.create('uploads', (table) => {
       table.increments()
-      table.string('file')
+      table.string('usuario_nombre')
+      table.string('file_nombre')
       table.timestamps()
     })
   }
-
   down () {
     this.drop('uploads')
   }
 }
-
 module.exports = UploadsSchema

@@ -51,14 +51,14 @@ const conn = new Client();
 const Helpers = use('Helpers')
 // const rutaVari = null;
 let filename = '';
-
+filename = Date.now()+'.pdf';
 Route.post('/upload', async ({ request }) => {
   const profileFiles = request.file('profile_file', {
     types: ['pdf'],
     size: '20mb',
     extname: ['jpeg', 'png', 'jpg']
   })
-  filename = Date.now()+'.pdf';
+
   await profileFiles.move(Helpers.tmpPath('uploads'), {
     name: filename,
     overwrite: false
@@ -172,3 +172,10 @@ Route.post('/upload', async ({ request }) => {
 //     });
 //   });
 // }).connect(connSettings);
+
+
+
+//
+// Route.get('/upload', 'UploadController.index')
+Route.get('/upload/create', 'UploadController.create')
+Route.get('/upload', 'UploadController.store')

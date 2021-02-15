@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="../style.css" />
     <script src="static/app.js"></script>
   <p>
-    Welcome <strong>{{ auth.user.username }}</strong>!
+    Welcome <input id="username"  name="username" >{{ auth.user.username }}</input>!
   </p>
 
 
@@ -14,7 +14,7 @@
     <h1>Upload file</h1>
 <form method="POST" action="/upload" enctype="multipart/form-data">
 {{ csrfField() }}
-  <input type="file" name="profile_file"/>
+  <input type="file" name="profile_file" id="profile_file"/>
   <button type="submit"> Submit </button>
 </form>
 
