@@ -5,8 +5,8 @@ const Model = use('Model')
 class User extends Model {
 
 
-  reports(){
-    return this.hasMany('App/Models/Report')
+  uploads(){
+    return this.hasMany('App/Models/Upload')
   }
 
 
