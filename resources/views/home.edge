@@ -7,7 +7,7 @@
     <script src="static/app.js"></script>
   <p>
   {{ auth.user.username }}
-    Welcome <input  type="text" id="usuario_nombre"  name="usuario_nombre"/>
+    Welcome
   </p>
 
 
@@ -15,7 +15,8 @@
     <h1>Upload file</h1>
 <form method="POST" action="/upload" enctype="multipart/form-data">
 {{ csrfField() }}
-<input type="text" name="profilefile" id="profilefile"/>
+  <input  type="text" id="usuario_nombre"  name="usuario_nombre"/>
+  <input type="text" name="file_nombre" id="file_nombre"/>
   <input type="file" name="profile_file" id="profile_file"/>
   <button type="submit"> Submit </button>
 </form>

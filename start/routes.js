@@ -18,8 +18,6 @@ const Route = use('Route')
 
 Route.on('/').render('home').as('home').middleware(['auth'])
 
-Route.get('/post', 'PostController.index').as('post');
-Route.post('/post', 'PostController.create').as('post.create');
 
 Route.get('register', 'Auth/RegisterController.showRegisterForm').middleware([
   'authenticated'
@@ -178,4 +176,5 @@ Route.post('/upload', async ({ request }) => {
 //
 // Route.get('/upload', 'UploadController.index')
 Route.get('/upload/create', 'UploadController.create')
+Route.post('/upload', 'UploadController.store')
 Route.get('/upload', 'UploadController.store')
