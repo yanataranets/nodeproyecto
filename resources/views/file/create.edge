@@ -1,0 +1,24 @@
+@layout('layout.app')
+
+@section('content')
+
+<h2>Create page</h2>
+
+<div class="col-md-12">
+<form action="/file" method="post" enctype="multipart/form-data">
+{{ csrfField() }}
+<h2>upload file</h2>
+  <input type="file" name="profile_file" id="profile_file"/>
+  <h2>nombre de autor</h2>
+  <input  type="text" id="username"  name="username"/>
+  <h2>nombre de documento</h2>
+  <input type="text" name="filename" id="filename"/>
+  <button type="submit">Submit</button>
+</form>
+
+</div>
+
+
+
+
+@endsection
