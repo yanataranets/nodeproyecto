@@ -15,8 +15,15 @@ Welcome
 <h1>Uploaded files</h1>
 <div class="col-md-12">
   @each(file in files)
-{{file.username}}
-{{file.filename}}
+  <div class=card text-center col-md-4>
+    <div class="card-body">
+        <div class="card-title">{{file.username}}</div>
+        <div class="card-text">{{file.filename}}</div>
+
+    </div>
+  </div>
+
+
   @endeach
 </div>
 

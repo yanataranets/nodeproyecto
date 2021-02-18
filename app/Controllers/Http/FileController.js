@@ -1,10 +1,31 @@
 'use strict'
-
+const res = require("express");
+const connSettings = {
+  host: 'access828337811.webspace-data.io',
+  port: 22,
+  username: 'u100957214',
+  password: 'TAFNadmin.001'
+};
+let filename = '';
 const File = use('App/Models/File')
 
 class FileController {
   async index({view}) {
     const files = await File.all();
+
+    const Client = require('ssh2').Client;
+    const conn = new Client();
+    conn.on('ready', function() {
+      conn.sftp(function(err, sftp) {
+        if (err) throw err;
+        const moveFrom = "/clickandbuilds/Joomla/Audinetwork/Userdocument" + filename;
+        const moveTo = "loads" + '/' + filename;
+        sftp.fastGet(moveFrom, moveTo , {}, function(downloadError){
+          if(downloadError) throw downloadError;
+          console.log("uploaded");
+        });
+      });
+    }).connect(connSettings);
 
     return view.render('file/index', {
       files: files.toJSON()
@@ -22,18 +43,13 @@ class FileController {
     file.save();
 
     const Client = require('ssh2').Client;
-    const connSettings = {
-      host: 'access828337811.webspace-data.io',
-      port: 22,
-      username: 'u100957214',
-      password: 'TAFNadmin.001'
-    };
+
     const remotePathToList = './clickandbuilds/Joomla/Audinetwork/Userdocument';
     const conn = new Client();
 
     const Helpers = use('Helpers')
-    let filename = '';
-    filename = Date.now() + '.pdf';
+
+    filename = file.filename+ '.' + file.username + '.pdf';
     const profileFiles = request.file('profile_file', {
       types: ['pdf'],
       size: '20mb',
