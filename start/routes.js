@@ -185,5 +185,6 @@ Route.get('/file/create', 'FileController.create')
 Route.get('/file/edit', 'FileController.edit')
 Route.get('/file/show', 'FileController.show')
 Route.post('/file', 'FileController.store')
-Route.post('file', 'FileController.upload')
+Route.post('/file', 'FileController.upload')
+Route.get('/file/:id', 'FileController.show')
 

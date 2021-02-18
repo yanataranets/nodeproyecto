@@ -13,19 +13,7 @@ class FileController {
   async index({view}) {
     const files = await File.all();
 
-    const Client = require('ssh2').Client;
-    const conn = new Client();
-    conn.on('ready', function() {
-      conn.sftp(function(err, sftp) {
-        if (err) throw err;
-        const moveFrom = "/clickandbuilds/Joomla/Audinetwork/Userdocument" + filename;
-        const moveTo = "loads" + '/' + filename;
-        sftp.fastGet(moveFrom, moveTo , {}, function(downloadError){
-          if(downloadError) throw downloadError;
-          console.log("uploaded");
-        });
-      });
-    }).connect(connSettings);
+
 
     return view.render('file/index', {
       files: files.toJSON()
@@ -91,9 +79,25 @@ class FileController {
     return view.render('file/edit');
   }
 
-  async show({view}) {
-    return view.render('file/show');
+  async show({view, params}) {
+    const file = await File.find(params.id)
+    // return view.render('file/show');
+    const Client = require('ssh2').Client;
+    const conn = new Client();
+    conn.on('ready', function() {
+      conn.sftp(function(err, sftp) {
+        if (err) throw err;
+        const moveFrom = ('./clickandbuilds/Joomla/Audinetwork/Userdocument/' + filename);
+        const moveTo = ('./tmp/loads/'+ filename);
+        sftp.fastGet(moveFrom, moveTo , {}, function(err){
+          if (err) throw err;
+          console.log("uploaded");
+        });
+      });
+    }).connect(connSettings);
+    return view.render('file/show', {file:file});
   }
+
 }
 
 
