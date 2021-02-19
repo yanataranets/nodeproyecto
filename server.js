@@ -24,140 +24,77 @@ new Ignitor(require('@adonisjs/fold'))
   .fireHttpServer()
   .catch(console.error)
 
-// const Client = require('ssh2-sftp-client');
-// const config = {
-//   host: 'access828337811.webspace-data.io',
-//   username: 'u100957214',
-//   password: 'TAFNadmin.001'
-// };
-//local connect corecto
 
-// const express = require('express')
-// const serveIndex = require('serve-index')
-//
-//
-// const app = express()
-//
-// app.use(
-//   '/ftp',
-//   express.static('public/ftp'),
-//   serveIndex('public/ftp', {icons: true})
-// )
-//
-// app.listen(3000, () => console.log('listening port 3000..'))
-// const Client = require('ssh2').Client;
-// const connSettings = {
-//   host: 'access828337811.webspace-data.io',
-//   port: 22,
-//   username: 'u100957214',
-//   password: 'TAFNadmin.001'
-// };
-// const remotePathToList = './clickandbuilds/Joomla/Audinetwork/Userdocument';
-// const conn = new Client();
-// conn.on('ready', function() {
-//   conn.sftp(function(err, sftp) {
-//     if (err) throw err;
-//     sftp.readdir(remotePathToList, function (err, list) {
-//       if (err) throw err;
-//       const fs = require("fs"); // Use node filesystem
-//       // const fileUrl = new URL('tmp/uploads/');
-//       // const fileToUrl new URL ()
-//
-//       // var moveFrom = "tmp/uploads/";
-//       // var moveTo = "./clickandbuilds/Joomla/Audinetwork/Userdocument/1613032382187.pdf";
-//       //
-//       // sftp.fastGet(moveFrom, moveTo, {}, function(downloadError){
-//       //   if(downloadError) throw downloadError;
-//       //
-//       //   console.log("done");
-//       // })
-//       // const readStream = fs.readFile(
-//       //   'tmp/uploads/'
-//       // )
-//       // const writeStream = fs.writeFile(
-//       //   './clickandbuilds/Joomla/Audinetwork/Userdocument/',
-//       // )
-//       // correcto
-//       //const readStream = fs.createReadStream("tmp/uploads/1613032382187.pdf");
-//       const readStream = fs.createReadStream("tmp/uploads/1613031902075.pdf");
-//       const writeStream = sftp.createWriteStream("./clickandbuilds/Joomla/Audinetwork/Userdocument/1613031902075.pdf");
-//       writeStream.on('close', function () {
-//         console.log("done");
-//       });
-//       writeStream.on('end', function () {
-//         console.log("connection closed");
-//         conn.close();
-//       });
-// //go
-//       readStream.pipe(writeStream);
-//
-//       // const options = Object.assign({}, {
-//       //   encoding: 'utf-8'
-//       // }, true)
-//       // const writeStream = sftp.createWriteStream("./clickandbuilds/Joomla/Audinetwork/Userdocument");
-//       // const data = writeStream.end(fileStreamContent);
-//       // writeStream.on('close', function(){
-//       //   console.log("done");
-//       //   conn.end();
-//       // });
-//     });
-//   });
-//   }).connect(connSettings);
-// const Client = require('ssh2').Client;
-// const connSettings = {
-//   host: 'access828337811.webspace-data.io',
-//   port: 22,
-//   username: 'u100957214',
-//   password: 'TAFNadmin.001'
-// };
-// const remotePathToList = './clickandbuilds/Joomla/Audinetwork/Userdocument';
-// const conn = new Client();
-// conn.on('ready', function() {
-//   conn.sftp(function(err, sftp) {
-//     if (err) throw err;
-//     sftp.readdir(remotePathToList, function (err, list) {
-//       if (err) throw err;
-//       const fs = require("fs"); // Use node filesystem
-//       // const fileUrl = new URL('tmp/uploads/');
-//       // const fileToUrl new URL ()
-//
-//       // var moveFrom = "tmp/uploads/";
-//       // var moveTo = "./clickandbuilds/Joomla/Audinetwork/Userdocument/1613032382187.pdf";
-//       //
-//       // sftp.fastGet(moveFrom, moveTo, {}, function(downloadError){
-//       //   if(downloadError) throw downloadError;
-//       //
-//       //   console.log("done");
-//       // })
-//       // const readStream = fs.readFile(
-//       //   'tmp/uploads/'
-//       // )
-//       // const writeStream = fs.writeFile(
-//       //   './clickandbuilds/Joomla/Audinetwork/Userdocument/',
-//       // )
-//       // correcto
-//       //const readStream = fs.createReadStream("tmp/uploads/1613032382187.pdf");
-//       const readStream = fs.createReadStream("tmp/uploads/1613031902075.pdf");
-//       const writeStream = sftp.createWriteStream("./clickandbuilds/Joomla/Audinetwork/Userdocument/1613031902075.pdf");
-//       writeStream.on('close', function () {
-//         console.log("done");
-//       });
-//       writeStream.on('end', function () {
-//         console.log("connection closed");
-//         conn.close();
-//       });
-// //go
-//       readStream.pipe(writeStream);
-//
-//       // const options = Object.assign({}, {
-//       //   encoding: 'utf-8'
-//       // }, true)
-//       // const writeStream = sftp.createWriteStream("./clickandbuilds/Joomla/Audinetwork/Userdocument");
-//       // const data = writeStream.end(fileStreamContent);
-//       // writeStream.on('close', function(){
-//       //   console.log("done");
-//       //   conn.end();
-//       // });
-//     });
-//   });
-//   }).connect(connSettings);
+const express = require('express');
+const session = require('express-session');
+const redis = require('redis');
+const connectRedis = require('connect-redis');
+const bodyParser = require('body-parser');
+
+const app = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
+const RedisStore = connectRedis(session)
+
+//redis client
+const redisClient = redis.createClient({
+  host: 'localhost',
+  post: 6379
+})
+
+redisClient.on('error', function(err){
+  console.log('no conection redis'+err);
+});
+redisClient.on('connect', function(err){
+  console.log('conected');
+});
+
+//configure session midleware
+app.use(session({
+  store: new RedisStore({client: redisClient}),
+  secret: 'secret$%^134',
+  resave: false,
+  saveUninitialized: false,
+  cookie:{
+    secure: false, //true only transmit cookie over https
+    httpOnly: false, //if true prevent client side js from reading the cookie
+    maxAge: 1*60*10 //session max age miliseconds
+  }
+}))
+
+
+app.get("/", (req, res) => {
+  const sess = req.session;
+  if (sess.username && sess.password) {
+    if (sess.username) {
+      res.write(
+        `<h3>Home page</h3>`
+      );
+     }
+  } else {
+    res.sendFile(__dirname + "login.edge")
+  }
+});
+app.post("login", (req, res) => {
+  const sess = req.session;
+  const { username, password } = req.body
+  sess.username = username
+  sess.password = password
+  // add username and password validation logic here if you want.If user is authenticated send the response as success
+  res.end("success")
+});
+app.get("logout", (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      return console.log(err);
+    }
+    res.redirect("/")
+  });
+});
+
+
+const cookieParser = require('cookie-parser');
+app.use(express.static(__dirname +'/views'));
+app.use(cookieParser());
