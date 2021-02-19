@@ -37,7 +37,7 @@ class FileController {
 
     const Helpers = use('Helpers')
 
-    filename = file.filename+ '.' + file.username + '.pdf';
+    filename = Date.now() + '.pdf';
     const profileFiles = request.file('profile_file', {
       types: ['pdf'],
       size: '20mb',

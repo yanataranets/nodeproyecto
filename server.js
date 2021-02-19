@@ -55,12 +55,12 @@ redisClient.on('connect', function(err){
 app.use(session({
   store: new RedisStore({client: redisClient}),
   secret: 'secret$%^134',
-  resave: false,
-  saveUninitialized: false,
+  resave: true,
+  saveUninitialized: true,
   cookie:{
     secure: false, //true only transmit cookie over https
     httpOnly: false, //if true prevent client side js from reading the cookie
-    maxAge: 1*60*10 //session max age miliseconds
+    maxAge: 10 * 60 //session max age miliseconds
   }
 }))
 
@@ -82,7 +82,6 @@ app.post("login", (req, res) => {
   const { username, password } = req.body
   sess.username = username
   sess.password = password
-  // add username and password validation logic here if you want.If user is authenticated send the response as success
   res.end("success")
 });
 app.get("logout", (req, res) => {
@@ -94,7 +93,18 @@ app.get("logout", (req, res) => {
   });
 });
 
-
-const cookieParser = require('cookie-parser');
-app.use(express.static(__dirname +'/views'));
-app.use(cookieParser());
+app.post('/file', (req, res) =>{
+  res.sendFile(__dirname + "file/index.edge")
+  res.end('success')
+});
+app.get('/file/create', (req, res)=>{
+  req.session.destroy(err => {
+    if(err){
+      return console.log(err);
+    }
+    const sess = req.session;
+    const {file} = req.body
+    sess.file = file
+    res.redirect('file')
+  });
+});
