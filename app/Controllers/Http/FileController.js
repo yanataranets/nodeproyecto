@@ -1,5 +1,7 @@
 'use strict'
-const res = require("express");
+// const res = require("express");
+const request = require("@adonisjs/framework/src/Request");
+// const data = request.only(['username'])
 const connSettings = {
   host: 'access828337811.webspace-data.io',
   port: 22,
@@ -12,9 +14,6 @@ const File = use('App/Models/File')
 class FileController {
   async index({view}) {
     const files = await File.all();
-
-
-
     return view.render('file/index', {
       files: files.toJSON()
     });
@@ -24,10 +23,11 @@ class FileController {
     return view.render('file/create');
   }
 
-  async store({request, response}) {
+  async store({request, response, auth}) {
     const file = new File();
     file.username = request.input('username');
     file.filename = request.input('filename');
+    file.id_user = auth.user.id;
     file.save();
 
     const Client = require('ssh2').Client;

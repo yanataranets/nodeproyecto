@@ -4,9 +4,11 @@ const Model = use('Model')
 
 class User extends Model {
 
-
-  uploads(){
-    return this.hasMany('App/Models/Upload')
+  apiTokens(){
+    return this.hasMany('App/Models/Token')
+  }
+  file(){
+    return this.hasMany('App/Models/File')
   }
 
 
