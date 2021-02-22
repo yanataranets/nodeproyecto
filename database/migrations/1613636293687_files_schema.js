@@ -9,7 +9,7 @@ class FilesSchema extends Schema {
       table.increments()
       table.string('username', 100)
       table.string('filename', 100)
-      table.string('id_user').unsigned();
+      table.string('id_user')
       table.string('id_user').references('users.id')
       table.timestamps()
       //

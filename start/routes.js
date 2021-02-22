@@ -34,6 +34,7 @@ Route.get('password/reset/:token', 'Auth/PasswordResetController.showResetForm')
 Route.post('password/reset', 'Auth/PasswordResetController.reset')
 
 Route.get('/file', 'FileController.index')
+// Route.get('/file/:id_user', 'FileController.index')
 Route.get('/file/create', 'FileController.create')
 Route.get('/file/edit', 'FileController.edit')
 Route.get('/file/show', 'FileController.show')

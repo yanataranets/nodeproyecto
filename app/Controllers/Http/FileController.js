@@ -20,6 +20,7 @@ class FileController {
   }
 
   async create({view}) {
+
     return view.render('file/create');
   }
 
